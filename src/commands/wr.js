@@ -40,7 +40,7 @@ module.exports = {
 			.then(response => response.text())
 			.then(body => {
 				if (body.length === 2) {
-					return interaction.reply({ content: `No times found for ${map}.` });
+					return interaction.reply({ content: `No times found for ${map}.`, ephemeral: true });
 				}
 
 				body = JSON.parse(body);
