@@ -101,8 +101,7 @@ module.exports = {
 							value: `[${body[1].name.toString()}](https://steamcommunity.com/profiles/${body[1].steamid.toString()}): ${body[1].time.toString()} **${body[1].wrDif.toString()}**
 							[${body[2].name.toString()}](https://steamcommunity.com/profiles/${body[2].steamid.toString()}): ${body[2].time.toString()} **${body[2].wrDif.toString()}**
 							[${body[3].name.toString()}](https://steamcommunity.com/profiles/${body[3].steamid.toString()}): ${body[3].time.toString()} **${body[3].wrDif.toString()}**
-							[${body[4].name.toString()}](https://steamcommunity.com/profiles/${body[4].steamid.toString()}): ${body[4].time.toString()} **${body[4].wrDif.toString()}**
-							`,
+							[${body[4].name.toString()}](https://steamcommunity.com/profiles/${body[4].steamid.toString()}): ${body[4].time.toString()} **${body[4].wrDif.toString()}**`,
 						}
 					)
 					.setTimestamp()
