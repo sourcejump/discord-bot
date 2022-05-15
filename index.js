@@ -4,7 +4,6 @@ const path = require('path');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { Client, Collection, Intents } = require('discord.js');
-const greetings = require('./src/data/greeting_replies.js');
 
 const token = process.env.TOKEN;
 const clientId = process.env.CLIENT_ID;
@@ -13,6 +12,20 @@ const guildId = process.env.GUILD_ID;
 const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
+
+// Load events from event files.
+const eventsPath = path.join(__dirname, 'src', 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+	const filePath = path.join(eventsPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
 
 // Load commands from command files.
 client.commands = new Collection();
@@ -67,41 +80,6 @@ client.on('interactionCreate', async (interaction) => {
             ephemeral: true,
         });
         console.error(error);
-    }
-});
-
-client.on('messageCreate', async (message) => {
-    if (message.author.bot || !message.mentions.has(client.user.id)) return;
-    if (message.content.includes('night')) {
-        message.reply(
-            greetings.night[Math.floor(Math.random() * greetings.night.length)],
-        );
-    } else if (message.content.includes('morning')) {
-        message.reply(
-            greetings.morning[
-                Math.floor(Math.random() * greetings.morning.length)
-            ],
-        );
-    } else if (message.content.includes('afternoon')) {
-        message.reply(
-            greetings.afternoon[
-                Math.floor(Math.random() * greetings.afternoon.length)
-            ],
-        );
-    } else if (message.content.includes('evening')) {
-        message.reply(
-            greetings.evening[
-                Math.floor(Math.random() * greetings.evening.length)
-            ],
-        );
-    }
-    // Babyjit -> Babyjit
-    else if (message.content.includes('<:babyjit:759828360947302401>')) {
-        message.reply('<:babyjit:759828360947302401>');
-    }
-    // Blob Heart Hug -> Blob Hug Love
-    else if (message.content.includes('<:blobhearthug:723416575075680257>')) {
-        message.reply('<:blobhuglove:764792606592860211>');
     }
 });
 
