@@ -1,4 +1,5 @@
 # Discord Bot
+
 A Discord bot for the [SourceJump](https://sourcejump.net) community built with [discord.js](https://github.com/discordjs/discord.js).
 
 ## Contributing
