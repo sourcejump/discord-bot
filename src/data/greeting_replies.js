@@ -1,5 +1,5 @@
 
-morning = [
+const morning = [
     "Good morning!",
     "Expect more from yourself than from others.\nBecause expectations from others hurt a lot, while expectations from yourself inspire a lot.\nThat's life.\nGood Morning!",
     "Good Morning! Follow three principles to live a peaceful life\n1. Accept what is coming\n2. Adjust to what you have\n3. Avoid negative people",
@@ -63,7 +63,7 @@ morning = [
     "Happy and lucky are those in life who see the sun rising. Good Morning!",
     "Smile and be happy. Make the world a better place to live. Good Morning!",
 ];
-afternoon = [
+const afternoon = [
     "Wishing you an afternoon experience so sweet and pleasant that makes you feel thankful to be alive today. May you have the best afternoon of your life today!",
     "There are good and bad moments, but when a friend is next to you everything is different, joy becomes more immense and sadness is easier to cope with, so I wish you a very happy afternoon dear friend.",
     "I wish you have a nice afternoon, perform activities in which you feel comfortable and happy and surround yourself with the people that you love the most.",
@@ -107,7 +107,7 @@ afternoon = [
     "This afternoon is here to calm your tired mind after a hectic day. Enjoy the blessings it offers you and be thankful always. Good afternoon!",
     "If you feel tired and sleepy you could use a nap, you will see that it will help you recover your energy and feel much better to finish the day. Have a beautiful afternoon!"
 ];
-evening = [
+const evening = [
     "Bonsoir.",
     "こんばんは。",
     "God kväll.",
@@ -146,7 +146,7 @@ evening = [
     "The evening is the best time for relaxation. It is a special gift to feel at home once again. The evening is a great treasure that shouldn’t be messed with. Good evening.",
     "No matter how bad things get, something good is out there just over the horizon. Good evening."
 ];
-night = [
+const night = [
     "Do not be afraid of sunset because sunrise will soon follow and bring along new hope and optimism. Good night!",
     "It is my wish that you enjoy your sleep as much as the fish enjoys being in water. Have a good night!",
     "Fluffy pillows and cozy covers, beautiful dreams and the warmest snuggles. May your dreams be full of wonderful thoughts and lovely things.",
