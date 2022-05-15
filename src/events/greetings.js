@@ -2,14 +2,17 @@ const greetings = require('./../data/greeting_replies.js');
 const greetingTimer = new Set();
 
 module.exports = {
-	name: 'messageCreate',
-	execute(message) {
-        if (message.author.bot || !message.mentions.has(message.client.user.id)) return;
+    name: 'messageCreate',
+    execute(message) {
+        if (message.author.bot || !message.mentions.has(message.client.user.id))
+            return;
         // Cooldown for greeting messages. Don't allow people to get more than 1 message every 5 minutes.
-        if(greetingTimer.has(message.author.id)) return;
+        if (greetingTimer.has(message.author.id)) return;
         if (message.content.includes('night')) {
             message.reply(
-                greetings.night[Math.floor(Math.random() * greetings.night.length)],
+                greetings.night[
+                    Math.floor(Math.random() * greetings.night.length)
+                ],
             );
         } else if (message.content.includes('morning')) {
             message.reply(
@@ -35,12 +38,14 @@ module.exports = {
             message.reply('<:babyjit:759828360947302401>');
         }
         // Blob Heart Hug -> Blob Hug Love
-        else if (message.content.includes('<:blobhearthug:723416575075680257>')) {
+        else if (
+            message.content.includes('<:blobhearthug:723416575075680257>')
+        ) {
             message.reply('<:blobhuglove:764792606592860211>');
         }
         greetingTimer.add(message.author.id);
         setTimeout(() => {
             greetingTimer.delete(message.author.id);
         }, 300000);
-	},
+    },
 };
