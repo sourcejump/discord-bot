@@ -21,7 +21,7 @@ module.exports = {
                             .then((data) => data.text())
                             .then((body) => {
                                 body = JSON.parse(body);
-                                res = body['_aCellValues'];
+                                let res = body['_aCellValues'];
 
                                 let modID = res[0]['_sProfileUrl'].replace(
                                     'https://gamebanana.com/mods/',
@@ -81,7 +81,7 @@ module.exports = {
                             .then((data) => data.text())
                             .then((body) => {
                                 body = JSON.parse(body);
-                                res = body['_aCellValues'];
+                                let res = body['_aCellValues'];
 
                                 let modID = res[0]['_sProfileUrl'].replace(
                                     'https://gamebanana.com/mods/',
