@@ -29,7 +29,6 @@ module.exports = {
                 .setRequired(true),
         ),
     async execute(interaction) {
-        const SOURCEJUMP_API_URL = process.env.SOURCEJUMP_API_URL;
         const fetch = require('node-fetch');
         const map = interaction.options.getString('map');
         const apiOptions = {
@@ -39,7 +38,7 @@ module.exports = {
             },
         };
 
-        fetch(`${SOURCEJUMP_API_URL}/records/${map}`, apiOptions)
+        fetch(`${process.env.SOURCEJUMP_API_URL}/records/${map}`, apiOptions)
             .then((response) => response.json())
             .then((body) => {
                 if (body.length === 0) {
