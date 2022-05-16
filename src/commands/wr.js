@@ -29,28 +29,26 @@ module.exports = {
                 .setRequired(true),
         ),
     async execute(interaction) {
-        // Maybe store this in env so it doesn't need to be changed/declared here?
-        const SOURCEJUMP_API_URL = 'https://sourcejump.net/api';
+        const SOURCEJUMP_API_URL = process.env.SOURCEJUMP_API_URL;
         const fetch = require('node-fetch');
         const map = interaction.options.getString('map');
         const apiOptions = {
             method: 'GET',
             headers: {
-                'api-key': process.env.SJ_API_KEY,
+                'api-key': process.env.SOURCEJUMP_API_KEY,
             },
         };
 
         fetch(`${SOURCEJUMP_API_URL}/records/${map}`, apiOptions)
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((body) => {
-                if (body.length === 2) {
+                if (body.length === 0) {
                     return interaction.reply({
                         content: `No times found for ${map}.`,
                         ephemeral: true,
                     });
                 }
 
-                body = JSON.parse(body);
                 let icon_url = discordPics[body[0].tier];
 
                 const embed = new MessageEmbed()
