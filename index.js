@@ -5,6 +5,9 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { Client, Collection, Intents } = require('discord.js');
 
+// Typeorm
+const typeOrmConnection = require('./src/database/db');
+
 const token = process.env.TOKEN;
 const clientId = process.env.CLIENT_ID;
 const guildId = process.env.GUILD_ID;
@@ -61,6 +64,10 @@ const rest = new REST({ version: '9' }).setToken(token);
 
 client.once('ready', () => {
     console.log('Ready!');
+
+    typeOrmConnection.initialize().then(() => {
+        console.log('Initialized Database!');
+    });
 });
 
 client.on('interactionCreate', async (interaction) => {
