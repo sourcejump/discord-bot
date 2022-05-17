@@ -64,10 +64,10 @@ const rest = new REST({ version: '9' }).setToken(token);
 
 client.once('ready', () => {
     console.log('Ready!');
-    
+
     typeOrmConnection.initialize().then(() => {
-        console.log('Initialized Database!')
-    })
+        console.log('Initialized Database!');
+    });
 });
 
 client.on('interactionCreate', async (interaction) => {
