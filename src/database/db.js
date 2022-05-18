@@ -4,7 +4,7 @@ const typeormConnection = new typeorm.DataSource({
     type: 'mysql',
     url: process.env.DATABASE_URL,
     synchronize: true, //disable when in production,
-    entities: [], //require('./path/to/entity'), ...
+    entities: [require('./entity/gamebanana_maps')], //require('./path/to/entity'), ...
 });
 
 module.exports = typeormConnection;
