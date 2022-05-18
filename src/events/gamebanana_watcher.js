@@ -21,6 +21,7 @@ module.exports = {
                         let mapAuthor = res[0]['_aSubmitter']['_sName'];
                         let mapDL = `https://gamebanana.com/mods/${modID}`;
                         let updated = false;
+                        let dateUpdated = res[0]['_tsDateUpdated'];
 
                         sqlTable
                             .find({
@@ -31,21 +32,33 @@ module.exports = {
                             .then((map) => {
                                 //If the map already exists in the database we check to see if its updated or not.
                                 if (map.length) {
-                                    if (map.dateAdded == map.dateLastUpdated)
+                                    if (dateUpdated == map[0].dateLastUpdated)
                                         return;
                                     else updated = true;
                                 }
 
-                                let mapQuery = {
-                                    modID: modID,
-                                    mapName: mapName,
-                                    mapAuthor: mapAuthor,
-                                    mapPreviewImage: mapPreviewImage,
-                                    dateAdded: res[0]['_tsDateAdded'],
-                                    dateLastUpdated: res[0]['_tsDateUpdated'],
-                                };
-                                sqlTable.save(mapQuery);
-
+                                if (updated) {
+                                    typeormConnection
+                                        .createQueryBuilder()
+                                        .update('gamebanana_maps')
+                                        .set({
+                                            dateLastUpdated: dateUpdated,
+                                        })
+                                        .where('modID = :modID', {
+                                            modID: modID,
+                                        })
+                                        .execute();
+                                } else {
+                                    let mapQuery = {
+                                        modID: modID,
+                                        mapName: mapName,
+                                        mapAuthor: mapAuthor,
+                                        mapPreviewImage: mapPreviewImage,
+                                        dateAdded: res[0]['_tsDateAdded'],
+                                        dateLastUpdated: dateUpdated,
+                                    };
+                                    sqlTable.save(mapQuery);
+                                }
                                 const embed = new MessageEmbed()
                                     .setTitle(
                                         updated
@@ -88,7 +101,7 @@ module.exports = {
                             .then((body) => {
                                 handleData(false, body);
                             });
-                    }, 10000);
+                    }, 60000);
                 });
             });
     },
