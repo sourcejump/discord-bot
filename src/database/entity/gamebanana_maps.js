@@ -17,9 +17,6 @@ module.exports = new EntitySchema({
         mapAuthor: {
             type: 'varchar',
         },
-        mapPreviewImage: {
-            type: 'varchar',
-        },
         dateAdded: {
             type: 'int',
         },
