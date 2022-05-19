@@ -37,7 +37,7 @@ module.exports = {
                     .setStyle('SHORT')
                     .setRequired(false)
                 ]);
-        return await modal.showModal(m, {
+        await modal.showModal(m, {
             interaction: interaction,
             client: interaction.client
         })
