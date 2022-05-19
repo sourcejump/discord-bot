@@ -53,7 +53,6 @@ module.exports = {
                                         modID: modID,
                                         mapName: mapName,
                                         mapAuthor: mapAuthor,
-                                        mapPreviewImage: mapPreviewImage,
                                         dateAdded: res[0]['_tsDateAdded'],
                                         dateLastUpdated: dateUpdated,
                                     };
