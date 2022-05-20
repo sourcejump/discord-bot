@@ -4,6 +4,7 @@ const path = require('path');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { Client, Collection, Intents } = require('discord.js');
+const discordModals = require('discord-modals');
 
 const token = process.env.TOKEN;
 const clientId = process.env.CLIENT_ID;
@@ -12,6 +13,7 @@ const guildId = process.env.GUILD_ID;
 const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
+discordModals(client);
 
 // Load events from event files.
 const eventsPath = path.join(__dirname, 'src', 'events');
