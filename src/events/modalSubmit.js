@@ -55,7 +55,7 @@ module.exports = {
                 let timelimit = modal.getTextInputValue('timelimit');
                 const emoji = `${modal.client.emojis.cache.find(emoji => emoji.name == modal.getTextInputValue("emoji"))}`;
                 if (emoji == 'undefined') {
-                    reply = await modal.reply({content:"Emoji not found. Only custom server-emojis work.", ephemeral:true});
+                    await modal.reply({content:"Emoji not found. Only custom server-emojis work.", ephemeral:true});
                     return;
                 }
                 let image = '';
