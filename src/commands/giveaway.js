@@ -1,12 +1,10 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const modal = require('discord-modals');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('giveaway')
         .setDescription('An admin command for creating giveaways'),
-    async execute(interaction) {
-        modal(interaction.client);
+    async execute(interaction, modal) {
         let m = new modal.Modal()
                 .setCustomId('giveaway')
                 .setTitle('Create a giveaway')
@@ -37,7 +35,7 @@ module.exports = {
                     .setStyle('SHORT')
                     .setRequired(false)
                 ]);
-        return await modal.showModal(m, {
+        await modal.showModal(m, {
             interaction: interaction,
             client: interaction.client
         })
