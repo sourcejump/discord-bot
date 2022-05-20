@@ -26,7 +26,8 @@ function createGiveawayEmbed(description, timelimit, emoji, image, winner) {
                     value: "Winner: " + winner
                 }
             )
-            .setImage(image);
+            .setImage(image)
+            .setFooter({text: `Giveaway ended`});
         return embed;
     }
     let embed = new MessageEmbed()
