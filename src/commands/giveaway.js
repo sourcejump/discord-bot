@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Modal, MessageActionRow, TextInputComponent } = require('discord.js');
- 
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('giveaway')
@@ -34,7 +34,7 @@ module.exports = {
                 new MessageActionRow().addComponents(
                     new TextInputComponent()
                         .setCustomId('emoji')
-                        .setLabel('Emoji (To React With)')
+                        .setLabel('Emoji (To React With, without ::)')
                         .setStyle('SHORT')
                         .setRequired(true),
                 ),
@@ -46,7 +46,7 @@ module.exports = {
                         .setRequired(false),
                 ),
             ]);
- 
+
         await interaction.showModal(modal);
     },
 };
