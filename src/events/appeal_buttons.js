@@ -88,7 +88,7 @@ module.exports = {
                                         .value,
                             },
                         })
-                        .then((appeal) => {
+                        .then(() => {
                             typeormConnection
                                 .createQueryBuilder()
                                 .update('appeals')
