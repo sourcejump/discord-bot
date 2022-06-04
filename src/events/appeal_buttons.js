@@ -1,4 +1,6 @@
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const typeormConnection = require('../database/db');
+let sqlTable = typeormConnection.getRepository('appeals');
 
 module.exports = {
     name: 'interactionCreate',
@@ -75,10 +77,43 @@ module.exports = {
                                 components: [],
                             });
                         });
+                    sqlTable
+                        .find({
+                            where: {
+                                discordID:
+                                    interaction.message.embeds[0].fields[2]
+                                        .value,
+                                messageID:
+                                    interaction.message.embeds[0].fields[3]
+                                        .value,
+                            },
+                        })
+                        .then((appeal) => {
+                            typeormConnection
+                                .createQueryBuilder()
+                                .update('appeals')
+                                .set({
+                                    dateResolved: Date.now(),
+                                    resolvedBy: interaction.member.id,
+                                    accepted: accepted,
+                                })
+                                .where('discordID = :discordID', {
+                                    discordID:
+                                        interaction.message.embeds[0].fields[2]
+                                            .value,
+                                })
+                                .andWhere('messageID = :messageID', {
+                                    messageID:
+                                        interaction.message.embeds[0].fields[3]
+                                            .value,
+                                })
+                                .execute();
+                        });
                     user.send(
                         'Your appeal has been ' +
                             (accepted ? 'accepted' : 'denied'),
                     );
+
                     interaction.update({
                         content: 'Appeal ' + (accepted ? 'accepted' : 'denied'),
                         components: [],

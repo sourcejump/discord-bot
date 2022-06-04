@@ -4,7 +4,6 @@ const path = require('path');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { Client, Collection, Intents } = require('discord.js');
-const discordModals = require('discord-modals');
 
 // Typeorm
 const typeOrmConnection = require('./src/database/db');
@@ -16,7 +15,6 @@ const guildId = process.env.GUILD_ID;
 const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
-discordModals(client);
 
 // Load events from event files.
 const eventsPath = path.join(__dirname, 'src', 'events');
