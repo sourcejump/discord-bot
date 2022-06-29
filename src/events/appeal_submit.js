@@ -76,7 +76,7 @@ module.exports = {
 
                     modal.reply({
                         content:
-                            'Ban appeal sent successfuly. You will be notified once an admin resolves your appeal.',
+                            'Ban appeal sent successfully. You will be notified once an admin resolves your appeal.',
                         ephemeral: true,
                     });
                 });
