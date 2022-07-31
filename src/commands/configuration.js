@@ -17,7 +17,7 @@ module.exports = {
             .then((rows) => {
                 let options = [];
                 rows.forEach(
-                    (row, i) =>
+                    (row) =>
                         options.push({ label: row.name, value: row.name }), //To match SelectMenuBuilder() options format
                 );
                 let row = new ActionRowBuilder().addComponents(

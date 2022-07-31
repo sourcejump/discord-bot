@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { EmbedBuilder } = require('discord.js');
+const typeormConnection = require('../database/db');
 
 const discordPics = {
     0: 'https://i.imgur.com/T9l6udJ.png',
