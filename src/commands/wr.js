@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 const discordPics = {
     0: 'https://i.imgur.com/T9l6udJ.png',
@@ -28,16 +28,23 @@ module.exports = {
                 .setRequired(true),
         ),
     async execute(interaction) {
+        let SOURCEJUMP_API_KEY = await typeormConnection
+            .getRepository('configuration')
+            .findOne({ where: { name: 'SOURCEJUMP_API_KEY' } });
+        let SOURCEJUMP_API_URL = await typeormConnection
+            .getRepository('configuration')
+            .findOne({ where: { name: 'SOURCEJUMP_API_URL' } });
+
         const fetch = require('node-fetch');
         const map = interaction.options.getString('map');
         const apiOptions = {
             method: 'GET',
             headers: {
-                'api-key': process.env.SOURCEJUMP_API_KEY,
+                'api-key': SOURCEJUMP_API_KEY.value,
             },
         };
 
-        fetch(`${process.env.SOURCEJUMP_API_URL}/records/${map}`, apiOptions)
+        fetch(`${SOURCEJUMP_API_URL.value}/records/${map}`, apiOptions)
             .then((response) => response.json())
             .then((body) => {
                 if (body.length === 0) {
@@ -49,8 +56,8 @@ module.exports = {
 
                 let icon_url = discordPics[body[0].tier];
 
-                const embed = new MessageEmbed()
-                    .setColor('GREEN')
+                const embed = new EmbedBuilder()
+                    .setColor('Green')
                     .setAuthor({
                         name: body[0].map.toString(),
                         iconURL: icon_url,
@@ -96,10 +103,10 @@ module.exports = {
                     .setFooter({ text: 'SourceJump.net' });
 
                 if (body[0].video) {
-                    embed.addField(
-                        'Video: ',
-                        `[YouTube](https://www.youtube.com/watch?v=${body[0].video.toString()})`,
-                    );
+                    embed.addFields({
+                        name: 'Video: ',
+                        value: `[YouTube](https://www.youtube.com/watch?v=${body[0].video.toString()})`,
+                    });
                 }
 
                 return interaction.reply({ embeds: [embed] });

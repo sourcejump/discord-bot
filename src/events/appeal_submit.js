@@ -1,16 +1,28 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const {
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    InteractionType,
+} = require('discord.js');
 const typeormConnection = require('../database/db');
 
 module.exports = {
     name: 'interactionCreate',
     async execute(modal) {
-        if (modal.isModalSubmit() && modal.customId == 'banAppeal') {
+        if (
+            modal.type === InteractionType.ModalSubmit &&
+            modal.customId == 'banAppeal'
+        ) {
             let guild = modal.client.guilds.resolve(process.env.GUILD_ID);
+            let BAN_APPEAL_CHANNEL_ID = await typeormConnection
+                .getRepository('configuration')
+                .findOne({ where: { name: 'BAN_APPEAL_CHANNEL_ID' } });
             guild.channels
-                .fetch(process.env.BAN_APPEAL_CHANNEL_ID)
+                .fetch(BAN_APPEAL_CHANNEL_ID.value)
                 .then(async (channel) => {
-                    const embed = new MessageEmbed()
-                        .setColor('ORANGE')
+                    const embed = new EmbedBuilder()
+                        .setColor('Orange')
                         .setTitle(
                             'Ban Appeal - ' +
                                 modal.member.displayName +
@@ -36,18 +48,18 @@ module.exports = {
                                 value: modal.components[2].components[0].value,
                             },
                         );
-                    const row = new MessageActionRow()
+                    const row = new ActionRowBuilder()
                         .addComponents(
-                            new MessageButton()
+                            new ButtonBuilder()
                                 .setCustomId('appeal_accept')
                                 .setLabel('Accept')
-                                .setStyle('SUCCESS'),
+                                .setStyle(ButtonStyle.Success),
                         )
                         .addComponents(
-                            new MessageButton()
+                            new ButtonBuilder()
                                 .setCustomId('appeal_deny')
                                 .setLabel('Deny')
-                                .setStyle('DANGER'),
+                                .setStyle(ButtonStyle.Danger),
                         );
 
                     channel
@@ -76,7 +88,7 @@ module.exports = {
 
                     modal.reply({
                         content:
-                            'Ban appeal sent successfuly. You will be notified once an admin resolves your appeal.',
+                            'Ban appeal sent successfully. You will be notified once an admin resolves your appeal.',
                         ephemeral: true,
                     });
                 });
