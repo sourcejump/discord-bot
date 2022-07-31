@@ -1,17 +1,15 @@
 const {
-    ModalBuilder,
     ActionRowBuilder,
     SelectMenuBuilder,
-    TextInputBuilder,
     SlashCommandBuilder,
-    TextInputStyle,
 } = require('discord.js');
 const typeormConnection = require('../database/db');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('configure')
-        .setDescription('Change a configuration setting'),
+        .setDescription('Change a configuration setting')
+        .setDefaultMemberPermissions(0),
     async execute(interaction) {
         typeormConnection
             .getRepository('configuration')
