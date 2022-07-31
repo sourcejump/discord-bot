@@ -1,27 +1,20 @@
 var EntitySchema = require('typeorm').EntitySchema;
 
 module.exports = new EntitySchema({
-    name: 'gamebanana_maps',
+    name: 'configuration',
     columns: {
         id: {
             primary: true,
             type: 'int',
             generated: true,
         },
-        modID: {
-            type: 'int',
-        },
-        mapName: {
+        name: {
             type: 'varchar',
+            unique: true,
         },
-        mapAuthor: {
+        value: {
             type: 'varchar',
-        },
-        dateAdded: {
-            type: 'int',
-        },
-        dateLastUpdated: {
-            type: 'int',
+            nullable: true,
         },
     },
 });

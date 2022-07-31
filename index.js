@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { Client, Collection, Intents } = require('discord.js');
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
 
 // Typeorm
 const typeOrmConnection = require('./src/database/db');
@@ -13,7 +13,7 @@ const clientId = process.env.CLIENT_ID;
 const guildId = process.env.GUILD_ID;
 
 const client = new Client({
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
 });
 
 // Load events from event files.
@@ -49,7 +49,7 @@ for (const file of commandFiles) {
 }
 
 // Register commands with Discord's API.
-const rest = new REST({ version: '9' }).setToken(token);
+const rest = new REST({ version: '10' }).setToken(token);
 
 (async () => {
     try {
@@ -66,7 +66,22 @@ client.once('ready', () => {
     console.log('Ready!');
 
     typeOrmConnection.initialize().then(() => {
-        console.log('Initialized Database!');
+        typeOrmConnection
+            .createQueryBuilder()
+            .insert()
+            .orIgnore(`("name") DO NOTHING`)
+            .into('configuration')
+            .values([
+                { name: 'NEW_MAPS_CHANNEL_ID' },
+                { name: 'BAN_APPEAL_CHANNEL_ID' },
+                { name: 'SOURCEJUMP_API_KEY' },
+                { name: 'SOURCEJUMP_API_URL' },
+            ])
+            .execute()
+            .then(() => {
+                console.log('Initialized Database!');
+                client.emit('gamebanana_watcher', client);
+            });
     });
 });
 

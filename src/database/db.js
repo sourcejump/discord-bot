@@ -7,6 +7,7 @@ const typeormConnection = new typeorm.DataSource({
     entities: [
         require('./entity/gamebanana_maps'),
         require('./entity/appeals'),
+        require('./entity/configuration'),
     ], //require('./path/to/entity'), ...
 });
 
