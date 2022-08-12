@@ -1,4 +1,9 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const {
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+} = require('discord.js');
 const typeormConnection = require('../database/db');
 let sqlTable = typeormConnection.getRepository('appeals');
 
@@ -8,17 +13,17 @@ module.exports = {
         if (!interaction.isButton()) return;
 
         const appealButtonMessage = (accept) => {
-            const row = new MessageActionRow().addComponents(
-                new MessageButton()
+            const row = new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
                     .setCustomId(
                         accept
                             ? 'appeal_accept_confirm'
                             : 'appeal_deny_confirm',
                     )
                     .setLabel('Confirm')
-                    .setStyle('SUCCESS'),
+                    .setStyle(ButtonStyle.Success),
             );
-            const embed = new MessageEmbed().addFields(
+            const embed = new EmbedBuilder().addFields(
                 {
                     name: 'Username',
                     value: interaction.message.embeds[0].fields[0].value,
@@ -63,9 +68,9 @@ module.exports = {
                     interaction.channel.messages
                         .fetch(interaction.message.embeds[0].fields[3].value)
                         .then((msg) => {
-                            const embed = msg.embeds[0];
+                            const embed = new EmbedBuilder(msg.embeds[0].data);
                             embed
-                                .setColor(accepted ? 'GREEN' : 'RED')
+                                .setColor(accepted ? 'Green' : 'Red')
                                 .setAuthor({
                                     name:
                                         'Appeal ' +

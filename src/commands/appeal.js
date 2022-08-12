@@ -1,5 +1,10 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Modal, MessageActionRow, TextInputComponent } = require('discord.js');
+const {
+    ModalBuilder,
+    ActionRowBuilder,
+    TextInputBuilder,
+    SlashCommandBuilder,
+    TextInputStyle,
+} = require('discord.js');
 const typeormConnection = require('../database/db');
 let sqlTable = typeormConnection.getRepository('appeals');
 
@@ -26,31 +31,31 @@ module.exports = {
                         }
                     }
                 }
-                const modal = new Modal()
+                const modal = new ModalBuilder()
                     .setCustomId('banAppeal')
                     .setTitle('Ban Appeal')
                     .addComponents([
-                        new MessageActionRow().addComponents(
-                            new TextInputComponent()
+                        new ActionRowBuilder().addComponents(
+                            new TextInputBuilder()
                                 .setCustomId('username')
                                 .setLabel('Username')
-                                .setStyle('SHORT')
+                                .setStyle(TextInputStyle.Short)
                                 .setPlaceholder('ex: John Doe')
                                 .setRequired(true),
                         ),
-                        new MessageActionRow().addComponents(
-                            new TextInputComponent()
+                        new ActionRowBuilder().addComponents(
+                            new TextInputBuilder()
                                 .setCustomId('steamid')
                                 .setLabel('SteamID')
-                                .setStyle('SHORT')
+                                .setStyle(TextInputStyle.Short)
                                 .setPlaceholder('STEAM_0:1:0')
                                 .setRequired(true),
                         ),
-                        new MessageActionRow().addComponents(
-                            new TextInputComponent()
+                        new ActionRowBuilder().addComponents(
+                            new TextInputBuilder()
                                 .setCustomId('reason')
                                 .setLabel('Appeal Reason')
-                                .setStyle('PARAGRAPH')
+                                .setStyle(TextInputStyle.Paragraph)
                                 .setMaxLength(1024) //embed restrictions
                                 .setPlaceholder('Reason for appeal')
                                 .setRequired(true),
