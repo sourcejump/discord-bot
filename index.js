@@ -76,8 +76,6 @@ client.once('ready', () => {
                 { name: 'BAN_APPEAL_CHANNEL_ID' },
                 { name: 'SOURCEJUMP_API_KEY' },
                 { name: 'SOURCEJUMP_API_URL' },
-                { name: 'DATABASE_ISSUES_CHANNEL_ID' },
-                { name: 'DATABASE_MANAGER_ROLE_ID' },
             ])
             .execute()
             .then(() => {
